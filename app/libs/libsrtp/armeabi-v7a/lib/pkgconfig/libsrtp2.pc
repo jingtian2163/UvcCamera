@@ -1,0 +1,12 @@
+prefix=/Users/liqisheng/Project/Test/complete/build//libsrtp/armeabi-v7a
+exec_prefix=/Users/liqisheng/Project/Test/complete/build//libsrtp/armeabi-v7a
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+
+Name: libsrtp2
+Version: 2.6.0
+Description: Library for SRTP (Secure Realtime Transport Protocol)
+
+Libs: -L${libdir} -lsrtp2
+Libs.private: -L/Users/liqisheng/Project/Test/complete/build//openssl/armeabi-v7a/lib -lcrypto -ldl -pthread 
+Cflags: -I${includedir}
