@@ -34,7 +34,7 @@ android {
 
 dependencies {
     implementation project(':mediaserver')  // 添加对 mediaserver 模块的依赖
-    implementation libs.appcompat
+    implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation libs.material
     implementation libs.constraintlayout
 }
