@@ -13,18 +13,6 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-
-        externalNativeBuild {
-            externalNativeBuild {
-                cmake {
-                    cppFlags "-std=c++11 -frtti -fexceptions"
-                    arguments "-DENABLE_API=on", "-DENABLE_API_STATIC_LIB=on", "-DENABLE_TESTS=off", "-DENABLE_PLAYER=off", "-DENABLE_SERVER_LIB=on","-DENABLE_WEBRTC=on", "-DENABLE_RTPPROXY=on", "-DENABLE_OPENSSL=on"
-                }
-            }
-            ndk {
-                abiFilters "arm64-v8a" //, "armeabi-v7a"
-            }
-        }
     }
 
     buildTypes {
@@ -33,33 +21,20 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
-    externalNativeBuild {
-        cmake {
-            path "src/main/cpp/CMakeLists.txt"
-        }
-    }
-//    sourceSets {
-//        main {
-//            jniLibs.srcDirs = ['src/main/cpp/libs_export']
-//        }
-//    }
     buildFeatures {
         viewBinding true
     }
-
-    ndkVersion '25.1.8937393'
 }
 
 dependencies {
+    implementation project(':mediaserver')  // 添加对 mediaserver 模块的依赖
     implementation libs.appcompat
     implementation libs.material
     implementation libs.constraintlayout
-    testImplementation libs.junit
-    androidTestImplementation libs.ext.junit
-    androidTestImplementation libs.espresso.core
 }

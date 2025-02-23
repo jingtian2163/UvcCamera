@@ -1,5 +1,6 @@
 plugins {
     alias(libs.plugins.android.library)
+    id 'maven-publish'  // 添加发布插件
 }
 
 android {
@@ -8,37 +9,52 @@ android {
 
     defaultConfig {
         minSdk 24
-
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
     }
 
     sourceSets {
         main {
-            jniLibs.srcDirs = ['src/main/jniLibs']
+            jniLibs.srcDirs = ['src/main/jniLibs']  // 指定 SO 文件位置
         }
     }
 
-    packagingOptions {
-        pickFirst 'jniLibs/arm64-v8a/libzlmediakit_jni.so'
-    }
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
+    // 添加发布配置
+    publishing {
+        singleVariant("release") {
+            withSourcesJar()
+            withJavadocJar()
+        }
+    }
 }
 
 dependencies {
-
     implementation libs.appcompat
     implementation libs.material
-    testImplementation libs.junit
-    androidTestImplementation libs.ext.junit
-    androidTestImplementation libs.espresso.core
+}
+
+// 添加发布配置
+afterEvaluate {
+    publishing {
+        publications {
+            release(MavenPublication) {
+                from components.release
+                groupId = 'com.github.jingtian2163'
+                artifactId = 'mediaserver'
+                version = '1.0'
+            }
+        }
+    }
 }
